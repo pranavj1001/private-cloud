@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +18,6 @@
   },
   "homepage": "https://github.com/pranavj1001/private-cloud#readme",
   "devDependencies": {
-    "express": "^4.17.3",
-    "ftp": "^0.3.10"
+    "express": "^4.17.3"
   }
 }
