@@ -40,7 +40,12 @@ app.put('/folder', (req, res) => {
 });
 
 app.get('/file', (req, res) => {
-	res.sendStatus(501);
+	try {
+		const filePath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
+		res.download(filePath);
+	} catch(e) {
+		res.json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
+	}
 });
 
 app.get('/files', (req, res) => {
