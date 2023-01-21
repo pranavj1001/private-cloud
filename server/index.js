@@ -1,5 +1,8 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const fs = require('fs');
 const path = require('path');
@@ -28,6 +31,10 @@ app.use(fileUpload({
 	createParentPath: true,
 	limits: { fileSize: 50 * 1024 * 1024 }
 }));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 
 const getAndPrintErrorString = (url, error) => {
 	const errorString = `Exception occurred at ${url}, Details \n ${util.inspect(error)}`;
@@ -46,7 +53,6 @@ app.get('/gettree', (req, res) => {
 
 app.post('/file', (req, res) => {
 	try {
-		console.log(`req: ${util.inspect(req)}`);
 		if (!req.files || Object.keys(req.files).length === 0) {
 			res.status(BAD_REQ_ERROR_CODE).json({...errorResponse, status: BAD_REQ_ERROR_CODE, resp: `No files were uploaded.`});
 			return;
