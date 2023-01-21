@@ -45,7 +45,24 @@ const getAndPrintErrorString = (url, error) => {
 app.get('/gettree', (req, res) => {
 	try {
 		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
-		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: fs.readdirSync(folderPath)});
+		const relativePath = folderPath === storageRootFolder ? "" : req.query.path;
+		const contents = [];
+		const itemList = fs.readdirSync(folderPath);
+		for (const item of itemList) {
+			const stats = fs.lstatSync(`${folderPath}/${item}`);
+			if (stats) {
+				contents.push({ 
+					name: item, 
+					onlyPath: `${relativePath}`, 
+					fullPath: `${relativePath}/${item}`, 
+					isDir: stats.isDirectory(), 
+					size: stats.size || "NA",
+					creationDate: stats.birthtime || "NA",
+					lastModifiedDate: stats.mtime || "NA",
+				});
+			}
+		}
+		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: contents});
 	} catch(e) {
 		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
 	}
