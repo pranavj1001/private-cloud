@@ -111,6 +111,10 @@ app.get('/files', (req, res) => {
 	res.sendStatus(501);
 });
 
+app.get('/', (req, res) => {
+	res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: "HEALTH OK!"});
+});
+
 app.listen(port, () => {
   console.log(`private-cloud backend server initialized on port ${port}`)
 });
