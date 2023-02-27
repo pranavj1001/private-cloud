@@ -1,6 +1,7 @@
 import "bulma/css/bulma.min.css";
 import { useEffect, useState } from "react";
 import { getTree } from "../api";
+import Tree from "./Tree";
 
 function App() {
   const [path, setPath] = useState("");
@@ -12,6 +13,7 @@ function App() {
       .then((result) => {
         if (result?.status === 200) {
           if (!ignore)
+          console.log(result.data["resp"]);
             setFiles(result.data["resp"]);
         } else {
           console.log(`Not able to fetch the tree. More details ${result}`);
@@ -25,10 +27,12 @@ function App() {
           setFiles([]);
       });
       return () => ignore = true;
-  }, []);
+  }, [path]);
 
   return (
-    <div>{JSON.stringify(files)}</div>
+    <div>
+      <Tree filesAndFolders={files} />
+    </div>
   )
 }
 
