@@ -68,17 +68,30 @@ app.get('/gettree', (req, res) => {
 	}
 });
 
-app.post('/file', (req, res) => {
-	try {
-		if (!req.files || Object.keys(req.files).length === 0) {
+app.put('/files', (req, res) => {
+  try {
+		console.log(req.files);
+		if (
+			!req.files ||
+			Object.keys(req.files).length === 0 ||
+			!req.files.items
+		) {
 			res.status(BAD_REQ_ERROR_CODE).json({...errorResponse, status: BAD_REQ_ERROR_CODE, resp: `No files were uploaded.`});
-			return;
 		}
+
 		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
 
-		for (const key in req.files) {
-			console.log(key);
-			const file = req.files[key];
+		let files = [];
+		if (Array.isArray(req.files.items)) {
+			console.log("multiple files upload");
+			files = req.files.items;
+		} else {
+			console.log("single file upload");
+			files.push(req.files.items);
+		}
+
+		for (const file of files) {
+			console.log(file);
 			const uploadPath = `${folderPath}/${file.name}`;
 			file.mv(uploadPath, (err) => {
 				if (err) {
@@ -86,16 +99,21 @@ app.post('/file', (req, res) => {
 					return;
 				}
 				console.log(`File: ${file.name} was successfully uploaded on ${uploadPath}`);
-				res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: 'File was successfully uploaded'});
-			})
+			});
 		}
-	} catch(e) {
-		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
-	}
+		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: `${files.length} File(s) were successfully uploaded`});
+  } catch (e) {
+    res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
+  }
 });
 
 app.post('/createfolder', (req, res) => {
-	res.sendStatus(501);
+	try {
+		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
+		fs.mkdirSync("")
+	} catch(e) {
+		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
+	}
 });
 
 app.get('/file', (req, res) => {
