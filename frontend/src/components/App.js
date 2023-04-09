@@ -2,6 +2,9 @@ import "bulma/css/bulma.min.css";
 import { useEffect, useState } from "react";
 import { getTree } from "../api";
 import Tree from "./Tree";
+import Nav from "./Nav";
+import "./common.css";
+const util = require("util");
 
 function App() {
   const [path, setPath] = useState("");
@@ -29,9 +32,15 @@ function App() {
       return () => ignore = true;
   }, [path]);
 
+  const changeFolder = (path) => {
+    // console.log(`Folder Change Asked! ${util.inspect(e.target.dataset.path)}`);
+    setPath(path);
+  };
+
   return (
-    <div>
-      <Tree filesAndFolders={files} />
+    <div className="container">
+      <Nav path={path} onFolderClicked={changeFolder} />
+      <Tree filesAndFolders={files} onFolderClicked={changeFolder} />
     </div>
   )
 }

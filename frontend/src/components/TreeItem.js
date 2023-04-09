@@ -1,11 +1,15 @@
 import { URLS } from "../api";
+import {inspect} from "util";
 
-const handleFolderClick = () => {
-  console.log(" Folder clicked!");
-};
+function TreeItem({object, onFolderClicked}) {
+  const {name, isDir, fullPath, onlyPath} = object;
 
-function TreeItem({object}) {
-  const {name, isDir, fullPath} = object;
+  const handleFolderClick = (e) => {
+    // console.log(`Folder clicked! ${util.inspect(e.target.dataset.path)}`);
+    // console.log(`1 ${inspect(e.currentTarget)}`);
+    onFolderClicked(e.currentTarget.dataset.path);
+  };
+
   if (!isDir) {
     return (
       <div>
@@ -14,7 +18,7 @@ function TreeItem({object}) {
     );
   } else {
     return (
-      <div onClick={handleFolderClick}>{name}</div>
+      <div className="clickable-cursor" onClick={handleFolderClick} data-path={fullPath}>{name}</div>
     );
   }
 }

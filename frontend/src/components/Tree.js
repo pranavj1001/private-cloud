@@ -1,11 +1,17 @@
 import TreeItem from "./TreeItem";
 
-function Tree({filesAndFolders}) {
+function Tree({filesAndFolders, onFolderClicked}) {
+  let id = 0;
+
+  const sendFolderClickedToParent = (e) => {
+    onFolderClicked(e);
+  };
+
   const renderedTree = filesAndFolders.map((object) => {
     console.log(object);
-    return <TreeItem object={object} />
+    id++;
+    return <TreeItem object={object} key={id} onFolderClicked={sendFolderClickedToParent} />
   });
-  // console.log(`Tree ${filesAndFolders} ${renderedTree}`);
 
   return <div>{renderedTree}</div>;
 }
