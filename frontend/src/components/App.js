@@ -4,7 +4,6 @@ import { getTree } from "../api";
 import Tree from "./Tree";
 import Nav from "./Nav";
 import "./common.css";
-const util = require("util");
 
 function App() {
   const [path, setPath] = useState("");

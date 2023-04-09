@@ -1,5 +1,4 @@
 import { URLS } from "../api";
-import {inspect} from "util";
 
 function TreeItem({object, onFolderClicked}) {
   const {name, isDir, fullPath, onlyPath} = object;

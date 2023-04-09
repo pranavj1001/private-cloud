@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faHome } from '@fortawesome/free-solid-svg-icons'
-const util = require("util");
 
 function Nav({path, onFolderClicked}) {
   let id = 0;
