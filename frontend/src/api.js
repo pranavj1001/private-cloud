@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "./config.js";
+import { config } from "./constants.js";
 
 const SERVER_URL = `${config["SERVER_PROTOCOL"]}://${config["SERVER_HOST"]}:${config["SERVER_PORT"]}`;
 
