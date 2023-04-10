@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { getTree } from "../api";
 import Tree from "./Tree";
 import Nav from "./Nav";
+import Modal from "./Modal";
 import "./common.css";
+import { MODAL_TYPES } from "../constants";
 
 function App() {
   const [path, setPath] = useState("");
@@ -39,6 +41,10 @@ function App() {
   return (
     <div className="container">
       <Nav path={path} onFolderClicked={changeFolder} />
+      <div className="columns">
+        <Modal data={MODAL_TYPES.CREATE_FOLDER} path={path} />
+        <Modal data={MODAL_TYPES.UPLOAD_FILES} path={path} />
+      </div>
       <Tree filesAndFolders={files} onFolderClicked={changeFolder} />
     </div>
   )
