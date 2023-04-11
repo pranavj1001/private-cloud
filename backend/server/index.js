@@ -74,7 +74,7 @@ app.put('/files', (req, res) => {
 		if (
 			!req.files ||
 			Object.keys(req.files).length === 0 ||
-			!req.files.items
+			!req.files["items[]"]
 		) {
 			res.status(BAD_REQ_ERROR_CODE).json({...errorResponse, status: BAD_REQ_ERROR_CODE, resp: `No files were uploaded.`});
 		}
@@ -82,12 +82,12 @@ app.put('/files', (req, res) => {
 		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
 
 		let files = [];
-		if (Array.isArray(req.files.items)) {
+		if (Array.isArray(req.files["items[]"])) {
 			console.log("multiple files upload");
-			files = req.files.items;
+			files = req.files["items[]"];
 		} else {
 			console.log("single file upload");
-			files.push(req.files.items);
+			files.push(req.files["items[]"]);
 		}
 
 		for (const file of files) {
@@ -110,7 +110,8 @@ app.put('/files', (req, res) => {
 app.post('/createfolder', (req, res) => {
 	try {
 		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
-		fs.mkdirSync("")
+		fs.mkdirSync(folderPath);
+		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: `${folderPath} created successfully`});
 	} catch(e) {
 		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
 	}
