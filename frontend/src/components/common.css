@@ -36,7 +36,11 @@ body {
   color: #999;
 }
 
-footer {
+.main-footer {
   background-color: #111 !important;
   padding: 3rem 1.5rem 3rem !important;
+}
+
+.max-width-30em {
+  max-width: 30em;
 }

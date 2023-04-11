@@ -12,8 +12,7 @@ function App() {
   const [path, setPath] = useState("");
   const [files, setFiles] = useState([]);
 
-  useEffect(() => {
-    let ignore = false;
+  const loadTree = (ignore = false) => {
     getTree(path)
       .then((result) => {
         if (result?.status === 200) {
@@ -31,7 +30,12 @@ function App() {
         if (!ignore)
           setFiles([]);
       });
-      return () => ignore = true;
+  }
+
+  useEffect(() => {
+    let ignore = false;
+    loadTree(ignore);
+    return () => ignore = true;
   }, [path]);
 
   const changeFolder = (path) => {
@@ -44,8 +48,8 @@ function App() {
       <div className="margin-left-20px margin-right-20px margin-top-20px">
         <Nav path={path} onFolderClicked={changeFolder} />
         <div className="columns">
-          <Modal data={MODAL_TYPES.CREATE_FOLDER} path={path} />
-          <Modal data={MODAL_TYPES.UPLOAD_FILES} path={path} />
+          <Modal data={MODAL_TYPES.CREATE_FOLDER} path={path} updateTree={loadTree} />
+          <Modal data={MODAL_TYPES.UPLOAD_FILES} path={path} updateTree={loadTree} />
         </div>
         <Tree filesAndFolders={files} onFolderClicked={changeFolder} />
       </div>
