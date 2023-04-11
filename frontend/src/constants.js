@@ -20,5 +20,11 @@ export const MODAL_TYPES = {
     MODAL_TITLE: "Modal to upload new files",
     TRIGGER_BUTTON_TEXT: "Upload Files",
     SUBMIT_BUTTON_TEXT: "Upload Files"
+  },
+  DELETE_CONTENTS: {
+    id: 3,
+    MODAL_TITLE: "Modal to delete content",
+    TRIGGER_BUTTON_TEXT: "Delete Items",
+    SUBMIT_BUTTON_TEXT: "Delete Items"
   }
 };

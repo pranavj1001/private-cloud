@@ -50,6 +50,7 @@ function App() {
         <div className="columns">
           <Modal data={MODAL_TYPES.CREATE_FOLDER} path={path} updateTree={loadTree} />
           <Modal data={MODAL_TYPES.UPLOAD_FILES} path={path} updateTree={loadTree} />
+          <Modal data={MODAL_TYPES.DELETE_CONTENTS} path={path} updateTree={loadTree} items={files} />
         </div>
         <Tree filesAndFolders={files} onFolderClicked={changeFolder} />
       </div>

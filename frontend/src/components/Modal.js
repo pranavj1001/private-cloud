@@ -4,7 +4,7 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { inspect } from "util";
 import { postCreateFolder, putUploadFiles } from "../api";
 
-function Modal({ data, path, updateTree }) {
+function Modal({ data, path, updateTree, items }) {
   const [isModalActive, toggleModal] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [filesName, setFilesName] = useState("");
