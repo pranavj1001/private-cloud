@@ -117,6 +117,16 @@ app.post('/createfolder', (req, res) => {
 	}
 });
 
+app.delete('/deleteSpecifiedPath', (req, res) => {
+	try {
+		// const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
+		// fs.mkdirSync(folderPath);
+		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: `${folderPath} created successfully`});
+	} catch(e) {
+		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
+	}
+});
+
 app.get('/file', (req, res) => {
 	try {
 		const filePath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
