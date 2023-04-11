@@ -56,7 +56,7 @@ function Modal({data, path}) {
 
   return (
     <div className="column is-2">
-      <button className="js-modal-trigger button" onClick={activateModal}>
+      <button className="js-modal-trigger button dark-button" onClick={activateModal}>
         {data.TRIGGER_BUTTON_TEXT}
       </button>
       

@@ -28,7 +28,7 @@ function Nav({path, onFolderClicked}) {
     } else {
       return (
         <li key={id} data-path={fullPath} onClick={handleFolderClick}>
-          <p className="clickable-cursor margin-left-10px">
+          <p className="clickable-cursor margin-left-20px">
             <span className="icon is-small">
               <FontAwesomeIcon icon={faFolder} />
             </span>
