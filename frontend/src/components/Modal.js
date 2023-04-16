@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { inspect } from "util";
 import Tree from "./Tree";
-import { postCreateFolder, putUploadFiles } from "../api";
+import { postCreateFolder, putUploadFiles, deletePaths } from "../api";
 
 function Modal({ data, path, updateTree, items }) {
   const [isModalActive, toggleModal] = useState(false);
@@ -100,7 +100,23 @@ function Modal({ data, path, updateTree, items }) {
       console.log("No items to delete!");
       changeModalStatus();
       return;
-    }    
+    }
+
+    deletePaths(path, selectedItems.filter(i => i.selected === true))
+      .then((result) => {
+        console.log(result);
+        if (result?.status === 200) {
+          updateTree();
+          changeModalStatus();
+        } else {
+          console.log(`Not able to delete the files. More details ${result}`);
+        }
+      })
+      .catch((err) => {
+        console.error(
+          `Some Error Occurred while deleting the files ${inspect(err)}`
+        );
+      });
   };
 
   useEffect(() => {

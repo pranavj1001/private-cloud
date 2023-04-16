@@ -6,6 +6,7 @@ export const config = {
   GET_FILE_API_URL: "/file",
   POST_CREATEFOLDER_API_URL: "/createfolder",
   PUT_UPLOAD_FILES_API_URL: "/files",
+  DELETE_PATHS_URL: "/deletepaths",
 };
 
 export const MODAL_TYPES = {
