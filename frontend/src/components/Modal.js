@@ -116,7 +116,7 @@ function Modal({ data, path, updateTree, items }) {
   };
 
   return (
-    <div className="column is-2">
+    <div className="display-inline-block margin-right-20px">
       <button
         className="js-modal-trigger button dark-button"
         onClick={changeModalStatus}
