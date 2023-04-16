@@ -1,23 +1,34 @@
+import { useEffect, useState } from "react";
 import { URLS } from "../api";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons'
 
 function TreeItem({object, treeItemClickEvent, showCheckbox}) {
-  const {index, name, isDir, fullPath} = object;
+  const {index, name, isDir, fullPath, selected} = object;
+
+  const [inputChecked, setInputChecked] = useState(false);
 
   const handleClickEvent = (e) => {
-    if (showCheckbox) {
-      return treeItemClickEvent(e);
-    }
     treeItemClickEvent(e.currentTarget.dataset.path);
   };
+
+  const updateCheckedValue = (e) => {
+    setInputChecked(e.currentTarget.checked);
+    return treeItemClickEvent(e);
+  }
+
+  useEffect(() => {
+    if (showCheckbox) {
+      setInputChecked(selected);
+    }
+  }, [selected, showCheckbox, setInputChecked]);
 
   if (showCheckbox) {
     return (
       <div>
-        <input type="checkbox" id={name} name={name} data-index={index} onChange={handleClickEvent} /> &nbsp;
+        <input type="checkbox" name={name} data-index={index} onChange={updateCheckedValue} id={index} checked={!!inputChecked} /> &nbsp;
         <FontAwesomeIcon icon={isDir ? faFolder : faFile} /> &nbsp;
-        <label htmlFor={name}>{name}</label>
+        <label htmlFor={index}>{name}</label>
       </div>);
   }
 
