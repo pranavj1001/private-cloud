@@ -2,12 +2,14 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { inspect } from "util";
+import Tree from "./Tree";
 import { postCreateFolder, putUploadFiles } from "../api";
 
 function Modal({ data, path, updateTree, items }) {
   const [isModalActive, toggleModal] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [filesName, setFilesName] = useState("");
+  const [selectedItems, setSelectedItems] = useState({});
   const [files, setFiles] = useState([]);
 
   const submitButtonAction = (e) => {
@@ -18,6 +20,11 @@ function Modal({ data, path, updateTree, items }) {
       case 2:
         uploadFiles();
         break;
+      case 3:
+        deleteSelectedItems();
+        break;
+      default:
+        console.log("Modal ID not specified");
     }
   };
 
@@ -37,6 +44,10 @@ function Modal({ data, path, updateTree, items }) {
     setFilesName(name);
     setFiles(event.target.files);
   };
+
+  const handleItemClicked = (event) => {
+    console.log(`Item clicked`);
+  }
 
   const createFolder = () => {
     postCreateFolder(`${path}/${folderName}`)
@@ -72,6 +83,10 @@ function Modal({ data, path, updateTree, items }) {
           `Some Error Occurred while uploading the files ${inspect(err)}`
         );
       });
+  };
+
+  const deleteSelectedItems = () => {
+    console.log('Delete items');
   };
 
   const renderModalBody = () => {
@@ -112,11 +127,15 @@ function Modal({ data, path, updateTree, items }) {
             </div>
           </div>
         );
+      case 3:
+        return (<Tree filesAndFolders={items} onFolderClicked={handleItemClicked} checkBoxTree={true} />)
+      default:
+        console.log("Modal ID not specified");
     }
   };
 
   return (
-    <div className="display-inline-block margin-right-20px">
+    <div className="display-inline-block margin-right-20px margin-top-5px">
       <button
         className="js-modal-trigger button dark-button"
         onClick={changeModalStatus}

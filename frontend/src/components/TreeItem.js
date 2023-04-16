@@ -1,13 +1,22 @@
 import { URLS } from "../api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons'
 
-function TreeItem({object, onFolderClicked}) {
-  const {name, isDir, fullPath, onlyPath} = object;
+function TreeItem({object, onFolderClicked, showCheckbox}) {
+  const {name, isDir, fullPath} = object;
 
   const handleFolderClick = (e) => {
-    // console.log(`Folder clicked! ${util.inspect(e.target.dataset.path)}`);
-    // console.log(`1 ${inspect(e.currentTarget)}`);
     onFolderClicked(e.currentTarget.dataset.path);
   };
+
+  if (showCheckbox) {
+    return (
+      <div>
+        <input type="checkbox" id={name} name={name} value={name} /> &nbsp;
+        <FontAwesomeIcon icon={isDir ? faFolder : faFile} /> &nbsp;
+        <label htmlFor={name}>{name}</label>
+      </div>);
+  }
 
   if (!isDir) {
     return (

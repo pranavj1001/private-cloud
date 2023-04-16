@@ -21,18 +21,18 @@ function Nav({path, onFolderClicked}) {
             <span className="icon is-small">
               <FontAwesomeIcon icon={faHome} />
             </span>
-            <span>Home</span>
+            <span>Home &nbsp;</span>
           </p>
         </li>
       );
     } else {
       return (
         <li key={id} data-path={fullPath} onClick={handleFolderClick}>
-          <p className="clickable-cursor margin-left-20px">
+          <p className="clickable-cursor margin-left-10px">
             <span className="icon is-small">
               <FontAwesomeIcon icon={faFolder} />
             </span>
-            <span>{folder}</span>
+            <span>{folder} &nbsp;</span>
           </p>
         </li>
       );

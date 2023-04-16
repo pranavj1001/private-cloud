@@ -47,13 +47,14 @@ function App() {
     <div className="container hero is-fullheight max-width">
       <div className="margin-left-20px margin-right-20px margin-top-20px">
         <Nav path={path} onFolderClicked={changeFolder} />
+        <hr className="solid" />
         <div>
           <Modal data={MODAL_TYPES.CREATE_FOLDER} path={path} updateTree={loadTree} />
           <Modal data={MODAL_TYPES.UPLOAD_FILES} path={path} updateTree={loadTree} />
           <Modal data={MODAL_TYPES.DELETE_CONTENTS} path={path} updateTree={loadTree} items={files} />
         </div>
         <hr className="solid" />
-        <Tree filesAndFolders={files} onFolderClicked={changeFolder} />
+        <Tree filesAndFolders={files} onFolderClicked={changeFolder} checkBoxTree={false} />
       </div>
       <Footer />
     </div>
