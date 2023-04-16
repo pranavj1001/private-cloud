@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { inspect } from "util";
@@ -89,6 +89,16 @@ function Modal({ data, path, updateTree, items }) {
     console.log('Delete items');
   };
 
+  useEffect(() => {
+    if (data.id === 3) {
+      let ignore = false;
+      console.log(`Dovahkiin`);
+      console.log(items);
+      setSelectedItems(items);
+      return () => ignore = true;
+    }
+  }, [selectedItems]);
+
   const renderModalBody = () => {
     switch (data.id) {
       case 1:
@@ -128,7 +138,7 @@ function Modal({ data, path, updateTree, items }) {
           </div>
         );
       case 3:
-        return (<Tree filesAndFolders={items} onFolderClicked={handleItemClicked} checkBoxTree={true} />)
+        return (<Tree filesAndFolders={items} treeClickEvent={handleItemClicked} checkBoxTree={true} />)
       default:
         console.log("Modal ID not specified");
     }

@@ -17,7 +17,6 @@ function App() {
       .then((result) => {
         if (result?.status === 200) {
           if (!ignore)
-          console.log(result.data["resp"]);
             setFiles(result.data["resp"]);
         } else {
           console.log(`Not able to fetch the tree. More details ${result}`);
@@ -54,7 +53,7 @@ function App() {
           <Modal data={MODAL_TYPES.DELETE_CONTENTS} path={path} updateTree={loadTree} items={files} />
         </div>
         <hr className="solid" />
-        <Tree filesAndFolders={files} onFolderClicked={changeFolder} checkBoxTree={false} />
+        <Tree filesAndFolders={files} treeClickEvent={changeFolder} checkBoxTree={false} />
       </div>
       <Footer />
     </div>

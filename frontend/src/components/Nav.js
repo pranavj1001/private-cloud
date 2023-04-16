@@ -11,7 +11,6 @@ function Nav({path, onFolderClicked}) {
   }
 
   const renderedNav = path.split("/").map((folder) => {
-    console.log(folder);
     id++;
     const fullPath = path.split("/").slice(0,id).join("/");
     if (id === 1) {
