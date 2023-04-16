@@ -16,8 +16,14 @@ function App() {
     getTree(path)
       .then((result) => {
         if (result?.status === 200) {
-          if (!ignore)
+          if (!ignore) {
+            let index = 0;
+            for (const file of result.data["resp"]) {
+              file.index = index;
+              index++;
+            }
             setFiles(result.data["resp"]);
+          }
         } else {
           console.log(`Not able to fetch the tree. More details ${result}`);
           if (!ignore)
@@ -33,7 +39,8 @@ function App() {
 
   useEffect(() => {
     let ignore = false;
-    loadTree(ignore);
+    if (!ignore)
+      loadTree(ignore);
     return () => ignore = true;
   }, [path]);
 

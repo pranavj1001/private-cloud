@@ -9,7 +9,7 @@ function Modal({ data, path, updateTree, items }) {
   const [isModalActive, toggleModal] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [filesName, setFilesName] = useState("");
-  const [selectedItems, setSelectedItems] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
   const [files, setFiles] = useState([]);
 
   const submitButtonAction = (e) => {
@@ -46,7 +46,10 @@ function Modal({ data, path, updateTree, items }) {
   };
 
   const handleItemClicked = (event) => {
-    console.log(`Item clicked`);
+    const selectedItemsArray = [...selectedItems];
+    const item = selectedItemsArray.find(i => i.index === parseInt(event.currentTarget.dataset.index));
+    item.selected = event.currentTarget.checked
+    setSelectedItems(selectedItemsArray);
   }
 
   const createFolder = () => {
@@ -86,18 +89,28 @@ function Modal({ data, path, updateTree, items }) {
   };
 
   const deleteSelectedItems = () => {
-    console.log('Delete items');
+    let itemsToDeleteFound = false;
+    for (const item of selectedItems) {
+      if (item.selected) {
+        itemsToDeleteFound = true;
+        break;
+      }
+    }
+    if (!itemsToDeleteFound) {
+      console.log("No items to delete!");
+      changeModalStatus();
+      return;
+    }    
   };
 
   useEffect(() => {
     if (data.id === 3) {
-      let ignore = false;
-      console.log(`Dovahkiin`);
-      console.log(items);
+      for (const item of items) {
+        item.selected = false;
+      }
       setSelectedItems(items);
-      return () => ignore = true;
     }
-  }, [selectedItems]);
+  }, [items, setSelectedItems, data.id]);
 
   const renderModalBody = () => {
     switch (data.id) {
