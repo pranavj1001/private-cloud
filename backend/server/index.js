@@ -117,11 +117,26 @@ app.post('/createfolder', (req, res) => {
 	}
 });
 
-app.delete('/deleteSpecifiedPath', (req, res) => {
+app.delete('/deletepaths', (req, res) => {
 	try {
-		// const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
-		// fs.mkdirSync(folderPath);
-		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: `${folderPath} created successfully`});
+		const folderPath = req.query.path ? path.join(storageRootFolder, req.query.path) : storageRootFolder;
+		let pathsSpecified = [];
+		if (req.body && req.body.paths && Array.isArray(req.body.paths)) {
+			pathsSpecified = req.body.paths;
+		} else {
+			res.status(BAD_REQ_ERROR_CODE).json({...errorResponse, status: BAD_REQ_ERROR_CODE, resp: `No files were deleted.`});
+		}
+
+		let count = 0;
+		console.log(pathsSpecified);
+		for (const item of pathsSpecified) {
+			if (item.selected) {
+				fs.rmSync(path.join(folderPath, item.name), { recursive: true, force: true });
+				count++;
+			}
+		}
+		
+		res.status(SUCCESS_HTTP_CODE).json({...successResponse, resp: `${count} item(s) deleted successfully.`});
 	} catch(e) {
 		res.status(SERVER_ERROR_CODE).json({...errorResponse, resp: getAndPrintErrorString(req.url, e)});
 	}
