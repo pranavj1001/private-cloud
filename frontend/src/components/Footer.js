@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="footer main-footer">
       <div className="content has-text-centered">
-        <p>Developed with &nbsp;<FontAwesomeIcon icon={faHeart} color='red' />&nbsp; by Pranav Jain </p>
+        <p>Developed with &nbsp;<FontAwesomeIcon icon={faHeart} color='red' />&nbsp; by <a target='_blank' href='https://github.com/pranavj1001'>Pranav Jain</a></p>
       </div>
     </footer>
   );
